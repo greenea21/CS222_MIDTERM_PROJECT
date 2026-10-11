@@ -75,7 +75,7 @@ int main() {
 		print_empty_line();
 		menu_choice = get_user_menu_choice();
 
-		switch (menu_choice) {
+		switch (menu_choice) { //each option should probably have its own function, otherwise this switch statement will be huge
 		case 1:
 			std::cout << "Displaying all books..." << std::endl;
 			break;
