@@ -69,13 +69,13 @@ void book::set_is_checked_out(bool is_checked_out) {
 }
 
 void book::display_info() const {
-	std::cout << "---------- BOOK DETAILS ----------" << std::endl
+	std::cout << "----------BOOK DETAILS----------" << std::endl
 		<< "Title:          " << title << std::endl
 		<< "Author:         " << author << std::endl
 		<< "Genre:          " << genre << std::endl
 		<< "Page Count:     " << page_count << std::endl
 		<< "Year Published: " << year_published << std::endl
 		<< "Status:         "
-		<< (is_checked_out ? "CHECKED OUT" : "AVAILABLE") << std::endl //value of is_checked_out is evaluated. if true it returns the first string (checked out), if false returns the second.
+		<< (is_checked_out ? "CHECKED OUT" : "AVAILABLE") << std::endl //value of is_checked_out is evaluated; if true it returns the first string (checked out), if false it returns the second.
 		<< "----------------------------------" << std::endl;
 }

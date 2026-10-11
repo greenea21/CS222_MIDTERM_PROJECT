@@ -15,6 +15,7 @@ void display_menu() {
 	std::cout << "7 Check out a book" << std::endl;
 	std::cout << "8 Return a book" << std::endl;
 	std::cout << "9 Quit" << std::endl;
+	std::cout << "--------------------------------" << std::endl;
 }
 
 void print_empty_line(int num_lines = 1) { //num lines defaults to 1 if no args are provided when called
