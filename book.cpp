@@ -76,6 +76,6 @@ void book::display_info() const {
 		<< "Page Count:     " << page_count << std::endl
 		<< "Year Published: " << year_published << std::endl
 		<< "Status:         "
-		<< (is_checked_out ? "Checked Out" : "Available") << std::endl
+		<< (is_checked_out ? "CHECKED OUT" : "AVAILABLE") << std::endl //value of is_checked_out is evaluated. if true it returns the first string (checked out), if false returns the second.
 		<< "----------------------------------" << std::endl;
 }
