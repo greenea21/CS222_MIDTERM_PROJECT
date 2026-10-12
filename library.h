@@ -8,7 +8,8 @@ private:
 	std::vector<book> books; //contains book objects (basically a built-in dynamic array)
 public:
 	//Load books from file
-	bool read_books_from_file(const std::string& filename); //returns true if books were loaded, false if they were not. also loads books into the vector
+	int get_line_count(const std::string& path);
+	bool read_books_from_file(const std::string& filename, int count); //returns true if books were loaded, false if they were not. also loads books into the vector
 															//will have to handle malicious input for MVP 6 and 7 (six seveeeeeen)
 															//If file is missing, reject file and return false
 															//If any data is bad/missing, reject file and return false

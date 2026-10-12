@@ -71,6 +71,17 @@ std::string get_user_text_input(std::string prompt = "") {
 int main() {
 	int menu_choice;
 
+	//Start loading books
+	library lib;
+	std::string filename = "books.csv";
+	int count = lib.get_line_count(filename) - 1; //get csv line count; skip header
+	
+	if (!lib.read_books_from_file(filename, count)) {
+		std::cout << "Failed to load books!" << std::endl;
+		return -1; //end the program
+	}
+	std::cout << "Books loaded successfully!" << std::endl;
+
 	while (true) {
 		display_menu();
 		print_empty_line();
@@ -79,6 +90,7 @@ int main() {
 		switch (menu_choice) { //each option should probably have its own function, otherwise this switch statement will be huge
 		case 1:
 			std::cout << "Displaying all books..." << std::endl;
+			lib.display_all_books();
 			break;
 		case 2:
 			std::cout << "Displaying all AVAILABLE books..." << std::endl;
