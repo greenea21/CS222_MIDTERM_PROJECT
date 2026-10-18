@@ -55,9 +55,12 @@ std::string get_user_text_input(std::string prompt = "") {
 
 	while (true) {
 		if (!prompt.empty()) {
-			std::cout << prompt << std::endl;
+			std::cout << prompt;
 		}
-		std::cout << "Enter your input: ";
+		else {
+			std::cout << "Enter your input: ";
+		}
+		
 		std::getline(std::cin, input);
 
 		if (input.empty()) {
@@ -82,6 +85,7 @@ int main() {
 		return -1; //end the program
 	}
 	std::cout << "Books loaded successfully!" << std::endl;
+	print_empty_line();
 
 	while (true) {
 		display_menu();
