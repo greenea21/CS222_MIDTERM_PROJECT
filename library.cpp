@@ -128,3 +128,122 @@ void library::display_all_books() const {
         current_book.display_info();
     }
 }
+    void library::display_available_books() const {
+        bool found = false;
+
+        for (const book& current_book : books) {
+            if (!current_book.get_is_checked_out()) {
+                current_book.display_info();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            std::cout << "No available books found." << std::endl;
+        }
+    }
+    void library::display_books_by_author(const std::string& author) const {
+        bool found = false;
+
+        for (const book& current_book : books) {
+            if (current_book.get_author() == author) {
+                current_book.display_info();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            std::cout << "No books found by that author." << std::endl;
+        }
+    }
+    void library::display_books_by_year(int year) const {
+        bool found = false;
+
+        for (const book& current_book : books) {
+            if (current_book.get_year_published() >= year) {
+                current_book.display_info();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            std::cout << "No books found for that year." << std::endl;
+        }
+    }
+    void library::sort_books_by_page_count() {
+        for (int i = 0; i < books.size() - 1; i++) {
+            int min_index = i;
+
+            for (int j = i + 1; j < books.size(); j++) {
+                if (books[j].get_page_count() < books[min_index].get_page_count()) {
+                    min_index = j;
+                }
+            }
+
+            book temp = books[i];
+            books[i] = books[min_index];
+            books[min_index] = temp;
+        }
+    }
+    void library::display_book_by_title(const std::string& title) const {
+        bool found = false;
+
+        for (const book& current_book : books) {
+            if (current_book.get_title() == title) {
+                current_book.display_info();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            std::cout << "No book found with that title." << std::endl;
+        }
+    }
+    bool library::check_out_book(const std::string& title) {
+        for (book& current_book : books) {
+            if (current_book.get_title() == title) {
+                if (current_book.get_is_checked_out()) {
+                    return false;
+                }
+
+                current_book.set_is_checked_out(true);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    bool library::return_book(const std::string& title) {
+        for (book& current_book : books) {
+            if (current_book.get_title() == title) {
+                if (!current_book.get_is_checked_out()) {
+                    return false;
+                }
+
+                current_book.set_is_checked_out(false);
+                return true;
+            }
+        }
+
+        return false;
+    }
+    void library::sort_books_by_title() {
+        if (books.size() < 2) {
+            return;
+        }
+
+        for (int i = 0; i < static_cast<int>(books.size()) - 1; i++) {
+            int min_index = i;
+
+            for (int j = i + 1; j < static_cast<int>(books.size()); j++) {
+                if (books[j].get_title() < books[min_index].get_title()) {
+                    min_index = j;
+                }
+            }
+
+            book temp = books[i];
+            books[i] = books[min_index];
+            books[min_index] = temp;
+        }
+    }
+
