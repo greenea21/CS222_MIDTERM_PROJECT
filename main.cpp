@@ -222,10 +222,23 @@ int main() {
 	                      << std::endl;
 	        }
 	    }
+
+		std::string status;
+		while (true) {
+			status = get_user_text_input("Is the book checked out? (0 = No, 1 = Yes): ");
+
+			if (status == "0" || status == "1") {
+				break;
+			}
+
+			std::cout << "Please enter 0 or 1!" << std::endl;
+		}
+		bool is_checked_out = (status == "1"); //Logically a just-donated book will never be checked out
+												//The assignment does say "all of the data required for a book" though so...
 	
 	    try {
 	        book donated_book(
-	            title, author, genre, page_count, year_published, false
+	            title, author, genre, page_count, year_published, is_checked_out
 	        );
 	        lib.donate_book(donated_book);
 	    }
