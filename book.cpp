@@ -1,81 +1,116 @@
 #include "book.h"
-#include <string>
 #include <iostream>
+#include <stdexcept>
 
-book::book() {
-	title = "EMPTY_TITLE";
-	author = "EMPTY_AUTHOR";
-	genre = "EMPTY_GENRE";
-	page_count = -1;
-	year_published = -1;
-	is_checked_out = false;
+Genre genre_from_string(const std::string& genre) {
+    if (genre == "Humor") return Genre::Humor;
+    if (genre == "Mystery") return Genre::Mystery;
+    if (genre == "Self-Help") return Genre::SelfHelp;
+    if (genre == "Satire") return Genre::Satire;
+    if (genre == "Nonfiction") return Genre::Nonfiction;
+    if (genre == "Horror") return Genre::Horror;
+    if (genre == "Fantasy") return Genre::Fantasy;
+    if (genre == "Science Fiction") return Genre::ScienceFiction;
+    if (genre == "Romance") return Genre::Romance;
+    if (genre == "Cooking") return Genre::Cooking;
+    if (genre == "Adventure") return Genre::Adventure;
+
+    throw std::invalid_argument("Unknown book genre: " + genre);
 }
 
-book::book(const std::string& title, const std::string& author, const std::string& genre, int page_count, int year_published, bool is_checked_out) {
-	if (title.empty()) {
-		throw std::exception("Title cannot be empty!");
-	}
-	this->title = title;
+std::string genre_to_string(Genre genre) {
+    switch (genre) {
+    case Genre::Humor: return "Humor";
+    case Genre::Mystery: return "Mystery";
+    case Genre::SelfHelp: return "Self-Help";
+    case Genre::Satire: return "Satire";
+    case Genre::Nonfiction: return "Nonfiction";
+    case Genre::Horror: return "Horror";
+    case Genre::Fantasy: return "Fantasy";
+    case Genre::ScienceFiction: return "Science Fiction";
+    case Genre::Romance: return "Romance";
+    case Genre::Cooking: return "Cooking";
+    case Genre::Adventure: return "Adventure";
+    }
 
-	if (author.empty()) {
-		throw std::exception("Author cannot be empty!");
-	}
-	this->author = author;
+    throw std::invalid_argument("Invalid genre value");
+}
 
-	if (genre.empty()) {
-		throw std::exception("Genre cannot be empty!");
-	}
-	this->genre = genre;
+book::book() {
+    title = "EMPTY_TITLE";
+    author = "EMPTY_AUTHOR";
+    genre = Genre::Humor;
+    page_count = -1;
+    year_published = -1;
+    is_checked_out = false;
+}
 
-	if (page_count < 1) {
-		throw std::exception("Page count cannot be less than 1!");
-	}
-	this->page_count = page_count;
+book::book(const std::string& title,
+           const std::string& author,
+           Genre genre,
+           int page_count,
+           int year_published,
+           bool is_checked_out) {
+    if (title.empty()) {
+        throw std::invalid_argument("Title cannot be empty!");
+    }
 
-	if (year_published <= 0 || year_published > 2026) { //hardcoded year is a bad idea but nobody is going to use this program
-		throw std::exception("Invalid publication year!");
-	}
-	this->year_published = year_published;
+    if (author.empty()) {
+        throw std::invalid_argument("Author cannot be empty!");
+    }
 
-	this->is_checked_out = is_checked_out;
+    if (page_count < 1) {
+        throw std::invalid_argument("Page count must be at least 1!");
+    }
+
+    if (year_published <= 0 || year_published > 2026) {
+        throw std::invalid_argument("Invalid publication year!");
+    }
+
+    this->title = title;
+    this->author = author;
+    this->genre = genre;
+    this->page_count = page_count;
+    this->year_published = year_published;
+    this->is_checked_out = is_checked_out;
 }
 
 std::string book::get_title() const {
-	return title;
+    return title;
 }
 
 std::string book::get_author() const {
-	return author;
+    return author;
 }
 
-std::string book::get_genre() const {
-	return genre;
+Genre book::get_genre() const {
+    return genre;
 }
 
 int book::get_page_count() const {
-	return page_count;
+    return page_count;
 }
 
 int book::get_year_published() const {
-	return year_published;
+    return year_published;
 }
 
 bool book::get_is_checked_out() const {
-	return is_checked_out;
+    return is_checked_out;
 }
 
 void book::set_is_checked_out(bool is_checked_out) {
-	this->is_checked_out = is_checked_out;
+    this->is_checked_out = is_checked_out;
 }
 
 void book::display_info() const {
-	std::cout << "----------BOOK DETAILS----------" << std::endl
-		<< "Title:          " << title << std::endl
-		<< "Author:         " << author << std::endl
-		<< "Genre:          " << genre << std::endl
-		<< "Page Count:     " << page_count << std::endl
-		<< "Year Published: " << year_published << std::endl
-		<< "Status:         "
-		<< (is_checked_out ? "CHECKED OUT" : "AVAILABLE") << std::endl //value of is_checked_out is evaluated; if true it returns the first string (checked out), if false it returns the second.
-		<< "----------------------------------" << std::endl;
+    std::cout << "----------BOOK DETAILS----------" << std::endl
+        << "Title:          " << title << std::endl
+        << "Author:         " << author << std::endl
+        << "Genre:          " << genre_to_string(genre) << std::endl
+        << "Page Count:     " << page_count << std::endl
+        << "Year Published: " << year_published << std::endl
+        << "Status:         "
+        << (is_checked_out ? "CHECKED OUT" : "AVAILABLE") << std::endl
+        << "----------------------------------" << std::endl;
 }
