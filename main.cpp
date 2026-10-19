@@ -1,4 +1,4 @@
-//Stretch goals 1, 2, 4
+//Stretch goals 1, 2, 4, 6
 #include <iostream>
 #include <string>
 #include <stdexcept>

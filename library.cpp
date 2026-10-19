@@ -1,6 +1,7 @@
 #include "library.h"
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 int library::get_line_count(const std::string& path)
 {
@@ -171,20 +172,25 @@ void library::display_all_books() const {
             std::cout << "No books found for that year." << std::endl;
         }
     }
-    void library::sort_books_by_page_count() {
-        for (int i = 0; i < books.size() - 1; i++) {
-            int min_index = i;
+    void library::sort_books_by_page_count() { //Stretch goal 6
+        //for (int i = 0; i < books.size() - 1; i++) {
+        //    int min_index = i;
 
-            for (int j = i + 1; j < books.size(); j++) {
-                if (books[j].get_page_count() < books[min_index].get_page_count()) {
-                    min_index = j;
-                }
-            }
+        //    for (int j = i + 1; j < books.size(); j++) {
+        //        if (books[j].get_page_count() < books[min_index].get_page_count()) {
+        //            min_index = j;
+        //        }
+        //    }
 
-            book temp = books[i];
-            books[i] = books[min_index];
-            books[min_index] = temp;
-        }
+        //    book temp = books[i];
+        //    books[i] = books[min_index];
+        //    books[min_index] = temp;
+        //}
+
+        std::sort(books.begin(), books.end(),
+            [](const book& a, const book& b) {
+                return a.get_page_count() < b.get_page_count(); 
+            });
     }
     void library::display_book_by_title(const std::string& title) const {
         bool found = false;
