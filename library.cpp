@@ -246,4 +246,13 @@ void library::display_all_books() const {
             books[min_index] = temp;
         }
     }
+    void library::donate_book(const book& new_book) {
+    books.push_back(new_book);
+
+    std::cout << "Thank you for donating \""
+              << new_book.get_title()
+              << "\" to the library!" << std::endl;
+}
+    
+
 
