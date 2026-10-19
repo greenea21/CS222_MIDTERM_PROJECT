@@ -60,6 +60,7 @@ bool library::read_books_from_file(const std::string& filename, int count) {
             return false;
         }
         std::string genre = current_line;
+        
 
         //Page count
         if (!std::getline(file, current_line, ',')) {
@@ -110,7 +111,7 @@ bool library::read_books_from_file(const std::string& filename, int count) {
 
         //Load current line's info into a book object inside of the books vector
         try {
-            books.push_back(book(title, author, genre, page_count, year_published, checkout_status)); //compiler will autoconvert checkout_status int to a bool (we already validated it is 1 or 0)
+            books.push_back(book(title, author, genre_from_string(genre), page_count, year_published, checkout_status)); //compiler will autoconvert checkout_status int to a bool (we already validated it is 1 or 0)
         }
         catch (const std::exception&) {
             std::cout << "Invalid book data!" << std::endl;
@@ -253,6 +254,3 @@ void library::display_all_books() const {
               << new_book.get_title()
               << "\" to the library!" << std::endl;
 }
-    
-
-
