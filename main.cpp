@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <stdexcept>
 #include "library.h" //library will handle search, sort, checkout, returning and adding books
 #include "book.h" //book will store info about books (title,author,genre,etc.)
 
@@ -16,6 +16,7 @@ void display_menu() {
 	std::cout << "8 Return a book" << std::endl;
 	std::cout << "9 Sort books alphabetically by title" << std::endl;
 	std::cout << "10 Quit" << std::endl;
+	std::cout << "11 Donate a book" << std::endl;
 	std::cout << "--------------------------------" << std::endl;
 }
 
@@ -156,6 +157,83 @@ int main() {
 			lib.sort_books_by_title();
 			lib.display_all_books();
 			break;
+
+	case 11: {
+	    std::cout << "Donate a book" << std::endl;
+	
+	    std::string title = get_user_text_input("Enter book title:");
+	    std::string author = get_user_text_input("Enter author:");
+	
+	    Genre genre;
+	    while (true) {
+	        std::string genre_input =
+	            get_user_text_input(
+	                "Enter genre (Humor, Mystery, Self-Help, Satire, "
+	                "Nonfiction, Horror, Fantasy, Science Fiction, "
+	                "Romance, Cooking, Adventure):"
+	            );
+	
+	        try {
+	            genre = genre_from_string(genre_input);
+	            break;
+	        }
+	        catch (const std::exception&) {
+	            std::cout << "Invalid genre. Try again." << std::endl;
+	        }
+	    }
+	
+	    int page_count;
+	    while (true) {
+	        std::string input = get_user_text_input("Enter page count:");
+	
+	        try {
+	            size_t used = 0;
+	            page_count = std::stoi(input, &used);
+	
+	            if (used != input.size() || page_count < 1) {
+	                throw std::invalid_argument("Invalid page count");
+	            }
+	            break;
+	        }
+	        catch (const std::exception&) {
+	            std::cout << "Please enter a positive whole number."
+	                      << std::endl;
+	        }
+	    }
+	
+	    int year_published;
+	    while (true) {
+	        std::string input =
+	            get_user_text_input("Enter publication year:");
+	
+	        try {
+	            size_t used = 0;
+	            year_published = std::stoi(input, &used);
+	
+	            if (used != input.size() ||
+	                year_published < 1 || year_published > 2026) {
+	                throw std::invalid_argument("Invalid year");
+	            }
+	            break;
+	        }
+	        catch (const std::exception&) {
+	            std::cout << "Please enter a valid publication year."
+	                      << std::endl;
+	        }
+	    }
+	
+	    try {
+	        book donated_book(
+	            title, author, genre, page_count, year_published, false
+	        );
+	        lib.donate_book(donated_book);
+	    }
+	    catch (const std::exception& e) {
+	        std::cout << "Donation failed: " << e.what() << std::endl;
+	    }
+	
+	    break;
+	}
 
 		case 10:
 			std::cout << "Quitting..." << std::endl;
